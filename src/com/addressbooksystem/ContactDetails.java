@@ -1,14 +1,14 @@
 package com.addressbooksystem;
 
 public class ContactDetails {
-    private  String firstName;
-    private String lastName;
-    private String address;
-    private String city;
-    private String state;
-    private String zip;
-    private String phone;
-    private String email;
+    private final String firstName;
+    private final String lastName;
+    private final String address;
+    private final String city;
+    private final String state;
+    private final String zip;
+    private final String phone;
+    private final String email;
 
     public ContactDetails(String firstName, String lastName, String address, String city, String state, String zip,
                           String phone, String email) {

@@ -1,14 +1,12 @@
 package com.addressbooksystem;
+
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        getContactDetails();
-    }
-
-    public static void getContactDetails () {
         Scanner scnr = new Scanner(System.in);
-        System.out.print("Enter First Name : ");
+
+        System.out.print("\nEnter First Name : ");
         String firstname = scnr.next();
         System.out.print("Enter Last Name : ");
         String lastName = scnr.next();
@@ -26,7 +24,8 @@ public class Main {
         String email = scnr.next();
 
         ContactDetails contactDetails = new ContactDetails(firstname, lastName, address, city, state, zip, phone, email);
-        System.out.println("\nPerson Contact Details : " + contactDetails);
-
+        AddressBookSystem addressBookSystem = new AddressBookSystem();
+        addressBookSystem.addContactDetails(contactDetails);
+        addressBookSystem.showContactDetails();
     }
 }
