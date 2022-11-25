@@ -47,4 +47,16 @@ public class AddressBookSystem {
         ContactDetails data = contactDetailsArrayList.get(0);
         System.out.println("\nEdited Data : " + data);
     }
+
+    public void deleteContactDetails () {
+        Scanner scnr = new Scanner(System.in);
+        System.out.print("\nEnter name to Delete the data : ");
+        String usrName = scnr.next();
+
+        for (int i = 0; i < contactDetailsArrayList.size(); i++) {
+            if (contactDetailsArrayList.get(i).getFirstName().equals(usrName)) {
+                contactDetailsArrayList.remove(i);
+            }
+        }
+    }
 }

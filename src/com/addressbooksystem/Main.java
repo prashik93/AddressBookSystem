@@ -27,7 +27,7 @@ public class Main {
 
         AddressBookSystem addressBookSystem = new AddressBookSystem();
         addressBookSystem.addContactDetails(contactDetails);
-        addressBookSystem.showContactDetails();
         addressBookSystem.editContactDetails();
+        addressBookSystem.deleteContactDetails();
     }
 }
