@@ -6,11 +6,41 @@ import java.util.Scanner;
 public class AddressBookSystem {
     public ArrayList <ContactDetails> contactDetailsArrayList = new ArrayList<>();
 
-    public void addContactDetails (ContactDetails contactDetails) {
-        contactDetailsArrayList.add(contactDetails);
+    public ContactDetails contactDetailsForm () {
+        Scanner scnr = new Scanner(System.in);
+        ContactDetails contactDetails = new ContactDetails();
+
+        System.out.print("\nEnter First Name : ");
+        contactDetails.setFirstName(scnr.next());
+        System.out.print("Enter Last Name : ");
+        contactDetails.setLastName(scnr.next());
+        System.out.print("Enter Address : ");
+        contactDetails.setAddress(scnr.next());
+        System.out.print("Enter City : ");
+        contactDetails.setCity(scnr.next());
+        System.out.print("Enter State : ");
+        contactDetails.setState(scnr.next());
+        System.out.print("Enter Zip Code : ");
+        contactDetails.setZip(scnr.next());
+        System.out.print("Enter Phone Number : ");
+        contactDetails.setPhone(scnr.next());
+        System.out.print("Enter Email : ");
+        contactDetails.setEmail(scnr.next());
+        return contactDetails;
     }
 
+    public void addContactDetails () {
+        Scanner scnr = new Scanner(System.in);
+
+        System.out.print("How many Contact details do you want to add? : ");
+        int num = scnr.nextInt();
+        for (int count = 0; count < num; count++) {
+            ContactDetails contactDetails = contactDetailsForm();
+            contactDetailsArrayList.add(contactDetails);
+        }
+    }
     public void showContactDetails () {
+        System.out.println("\nList : " + contactDetailsArrayList);
         for (int i = 0; i < contactDetailsArrayList.size(); i++) {
             System.out.println("\nDetails : " + contactDetailsArrayList.get(i));
         }
@@ -44,8 +74,6 @@ public class AddressBookSystem {
                 contactDetails.setEmail(scnr.next());
             }
         }
-        ContactDetails data = contactDetailsArrayList.get(0);
-        System.out.println("\nEdited Data : " + data);
     }
 
     public void deleteContactDetails () {
