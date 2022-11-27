@@ -43,16 +43,20 @@ public class AddressBook {
         System.out.print("How many Contact details do you want to add? : ");
         int num = scnr.nextInt();
         for (int count = 0; count < num; count++) {
+            boolean flag = false;
             ContactDetails contactDetails = new ContactDetails();
             contactDetailsForm(contactDetails);
             for (int i = 0; i < contactDetailsArrayList.size(); i++) {
                 if ((contactDetailsArrayList.get(i).getFirstName().equals(contactDetails.getFirstName())) && (contactDetailsArrayList.get(i).getLastName().equals(contactDetails.getLastName()))) {
-                    System.out.println("\nPerson already exist!");
+                    System.out.println("Contact details already exist. Please enter a New one : ");
+                    flag = true;
                     count--;
-                    continue;
+                    break;
                 }
             }
-            contactDetailsArrayList.add(contactDetails);
+            if(!flag) {
+                contactDetailsArrayList.add(contactDetails);
+            }
         }
     }
 
