@@ -6,7 +6,6 @@ public class MultipleAddressBook {
     public HashMap<String, AddressBook> addressBookMap = new HashMap<>();
     public void addMultipleAddressBook() {
         Scanner scnr = new Scanner(System.in);
-        AddressBook addressBook = new AddressBook();
 
         System.out.print("\nHow many Address Book do you want to Create? : ");
         int addressBookCount = scnr.nextInt();
@@ -14,6 +13,8 @@ public class MultipleAddressBook {
         for (int i = 0; i < addressBookCount; i++) {
             System.out.print("\nEnter address book name : ");
             String addressBookName = scnr.next();
+            AddressBook addressBook = new AddressBook();
+
             if(addressBookMap.containsKey(addressBookName)) {
                 System.out.println("\nAddress Book already exist");
                 return;

@@ -48,6 +48,8 @@ public class AddressBook {
             for (int i = 0; i < contactDetailsArrayList.size(); i++) {
                 if ((contactDetailsArrayList.get(i).getFirstName().equals(contactDetails.getFirstName())) && (contactDetailsArrayList.get(i).getLastName().equals(contactDetails.getLastName()))) {
                     System.out.println("\nPerson already exist!");
+                    count--;
+                    continue;
                 }
             }
             contactDetailsArrayList.add(contactDetails);
