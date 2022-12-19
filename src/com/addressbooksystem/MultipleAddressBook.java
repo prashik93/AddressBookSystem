@@ -1,7 +1,6 @@
 package com.addressbooksystem;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MultipleAddressBook {
     Scanner scnr = new Scanner(System.in);
@@ -107,6 +106,25 @@ public class MultipleAddressBook {
             }
         }
         System.out.println("Contact details does not exist");
+    }
+
+    public void searchPersonsByCityOrState() {
+        System.out.print("\nEnter City or State : ");
+        String cityOrState = scnr.next().toLowerCase();
+        System.out.print("\nEnter Name : ");
+        String cityOrStateName = scnr.next();
+        getPersonByCityOrState(cityOrState, cityOrStateName);
+    }
+
+    public void getPersonByCityOrState(String cityOrState, String cityOrStateName) {
+        addressBookMap.values().forEach(value ->{
+            value.contactDetailsArrayList.stream().filter(filteredValue -> {
+                        if(cityOrState.equals("city"))
+                            return filteredValue.getCity().equals(cityOrStateName);
+                        else return filteredValue.getState().equals(cityOrStateName);
+                    })
+                    .forEach(System.out::println);
+        });
     }
 
     @Override

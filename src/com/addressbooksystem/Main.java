@@ -20,6 +20,7 @@ public class Main {
                                 3.Print Address Book
                                 4.Edit Address Book's Contact Detail
                                 5.Delete Address Book's Contact Detail
+                                6.Search Persons By City Or State
                                 0.Exit""");
             System.out.print("Enter your choice : ");
             int userChoice = scnr.nextInt();
@@ -35,6 +36,8 @@ public class Main {
                         multipleAddressBook.editAddressBookMap();
                 case AddressBookConstants.DELETE_ADDRESS_BOOK ->
                         multipleAddressBook.deleteContact();
+                case AddressBookConstants.SEARCH_PERSONS_BY_CITY_OR_STATE ->
+                        multipleAddressBook.searchPersonsByCityOrState();
                 case AddressBookConstants.EXIT ->
                     count += 1;
                 default ->
