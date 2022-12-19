@@ -1,12 +1,13 @@
 package com.addressbooksystem;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MultipleAddressBook {
+    Scanner scnr = new Scanner(System.in);
     public HashMap<String, AddressBook> addressBookMap = new HashMap<>();
-    public void addMultipleAddressBook() {
-        Scanner scnr = new Scanner(System.in);
 
+    public void addMultipleAddressBook() {
         System.out.print("\nHow many Address Book do you want to Create? : ");
         int addressBookCount = scnr.nextInt();
 
@@ -15,25 +16,101 @@ public class MultipleAddressBook {
             String addressBookName = scnr.next();
             AddressBook addressBook = new AddressBook();
 
-            if(addressBookMap.containsKey(addressBookName)) {
-                System.out.println("\nAddress Book already exist");
-                return;
+            if (addressBookMap.containsKey(addressBookName)) {
+                System.out.println("\nAddress Book already exist. Please enter New One...");
+                i--;
+                continue;
             }
-            addressBook.addContactDetails();
             addressBookMap.put(addressBookName, addressBook);
         }
-        System.out.println(addressBookMap);
+        chooseAddressBookToAddContact();
+    }
+
+    public void chooseAddressBookToAddContact() {
+        Set<String> keys = addressBookMap.keySet();
+        System.out.println("Map : " + keys);
+        if(keys.size() > 0) {
+            System.out.println("\nAvailable Address Books are : " + keys);
+            System.out.print("Please choose to add contact : ");
+            String chosenAddressBook = scnr.next();
+            if (addressBookMap.containsKey(chosenAddressBook)) {
+                addContactInSelectedAddressBook(chosenAddressBook);
+                return;
+            }
+            System.out.println("\nPlease choose a valid one...");
+            chooseAddressBookToAddContact();
+            return;
+        }
+        System.out.println("\nNo Address Book Available, please add a New One");
+    }
+
+    public void addContactInSelectedAddressBook(String chosenAddressBook) {
+        AddressBook selectedAddressBookList = addressBookMap.get(chosenAddressBook);
+        selectedAddressBookList.addContactDetails();
+        addressBookMap.put(chosenAddressBook, selectedAddressBookList);
+    }
+    public boolean checkIfContactExists(String fname, String lname) {
+        Set<String> keys = addressBookMap.keySet();
+        for (String key : keys) {
+            AddressBook addressBook = addressBookMap.get(key);
+            long collect = addressBook.contactDetailsArrayList.stream().filter(existingList ->
+                    existingList.getFirstName().equals(fname)
+                            && existingList.getLastName().equals(lname)).count();
+            System.out.println("boolean collect : " + collect);
+            if (collect > 0) {
+                System.out.println("\nPerson exist!");
+                return true;
+            }
+        }
+        return false;
     }
 
     public void printAddressBookMap() {
         Set<String> keys = addressBookMap.keySet();
-        Iterator<String> it = keys.iterator();
-        System.out.println(addressBookMap.size());
-        while (it.hasNext()) {
-            String key = it.next();
-            AddressBook addressBook = addressBookMap.get(key);
-            System.out.println(key + " = " + addressBook);
+        if(keys.size() > 0) {
+            for (String key : keys) {
+                AddressBook addressBook = addressBookMap.get(key);
+                System.out.println(key + " = " + addressBook);
+            }
+            return;
         }
-        System.out.println(addressBookMap);
+        System.out.println("\n No Address Book Available");
+    }
+
+    public void editAddressBookMap() {
+        System.out.print("\nEnter First Name : ");
+        String usrFirstName = scnr.next();
+        System.out.print("Enter Last Name : ");
+        String usrLastName = scnr.next();
+        Set<String> keys = addressBookMap.keySet();
+        for (String key : keys) {
+            AddressBook addressBook = addressBookMap.get(key);
+            ContactDetails contactDetails = addressBook.checkIfContactExists(usrFirstName, usrLastName);
+            if (contactDetails != null) {
+                addressBook.editContactDetails(contactDetails);
+            }
+        }
+    }
+
+    public void deleteContact() {
+        System.out.print("\nEnter First Name : ");
+        String usrFirstName = scnr.next();
+        System.out.print("Enter Last Name : ");
+        String usrLastName = scnr.next();
+        Set<String> keys = addressBookMap.keySet();
+        for (String key : keys) {
+            AddressBook addressBook = addressBookMap.get(key);
+            ContactDetails contactDetails = addressBook.checkIfContactExists(usrFirstName, usrLastName);
+            if (contactDetails != null) {
+                addressBook.deleteContact(contactDetails);
+                return;
+            }
+        }
+        System.out.println("Contact details does not exist");
+    }
+
+    @Override
+    public String toString() {
+        return "addressBookMap=" + addressBookMap;
     }
 }
