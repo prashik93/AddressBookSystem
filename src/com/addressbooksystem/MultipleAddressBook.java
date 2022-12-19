@@ -1,10 +1,12 @@
 package com.addressbooksystem;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MultipleAddressBook {
     Scanner scnr = new Scanner(System.in);
     public HashMap<String, AddressBook> addressBookMap = new HashMap<>();
+    private HashMap<String, List<ContactDetails>> viewPersonsByCityMap = new HashMap<>();
 
     public void addMultipleAddressBook() {
         System.out.print("\nHow many Address Book do you want to Create? : ");
@@ -108,15 +110,16 @@ public class MultipleAddressBook {
         System.out.println("Contact details does not exist");
     }
 
-    public void searchPersonsByCityOrState() {
+    public String getCityOrState() {
         System.out.print("\nEnter City or State : ");
         String cityOrState = scnr.next().toLowerCase();
-        System.out.print("\nEnter Name : ");
-        String cityOrStateName = scnr.next();
-        getPersonByCityOrState(cityOrState, cityOrStateName);
+        return cityOrState;
     }
 
-    public void getPersonByCityOrState(String cityOrState, String cityOrStateName) {
+    public void searchPersonsByCityOrState() {
+        String cityOrState = getCityOrState();
+        System.out.print("\nEnter City or State Name : ");
+        String cityOrStateName = scnr.next().toLowerCase();
         addressBookMap.values().forEach(value ->{
             value.contactDetailsArrayList.stream().filter(filteredValue -> {
                         if(cityOrState.equals("city"))
@@ -125,6 +128,39 @@ public class MultipleAddressBook {
                     })
                     .forEach(System.out::println);
         });
+    }
+
+    public void viewPersonsByCity() {
+        System.out.print("\nEnter City or State Name : ");
+        String cityOrStateName = scnr.next().toLowerCase();
+        Set<String> keys = addressBookMap.keySet();
+        if (keys.size() > 0) {
+            for (String key : keys) {
+                AddressBook addressBook = addressBookMap.get(key);
+                Set<String> collect = addressBook.contactDetailsArrayList.stream().
+                        map(existing -> existing.getCity()).collect(Collectors.toSet());
+
+                collect.forEach(city -> {if(city.equals(cityOrStateName)) {
+                    viewPersonsByCityMap.put(city, addressBook.contactDetailsArrayList.stream().
+                            filter(existing -> existing.getCity().equals(cityOrStateName)).collect(Collectors.toList()));
+                }});
+            }
+            printPersonsByCityMap();
+            return;
+        }
+        System.out.println("\nNo Person found with respective City");
+    }
+
+    public void printPersonsByCityMap() {
+        Set<String> keys = viewPersonsByCityMap.keySet();
+        if(keys.size() > 0) {
+            for (String key : keys) {
+                List<ContactDetails> addressBook = viewPersonsByCityMap.get(key);
+                System.out.println(key + " = " + addressBook);
+            }
+            return;
+        }
+        System.out.println("\n No Address Book Available");
     }
 
     @Override
