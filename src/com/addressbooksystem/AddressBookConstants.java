@@ -10,6 +10,7 @@ public class AddressBookConstants {
     public static final int SEARCH_PERSONS_BY_CITY_OR_STATE = 6;
     public static final int VIEW_PERSONS_BY_CITY = 7;
     public static final int COUNT_PERSONS_BY_CITY_OR_STATE = 8;
+    public static final int SORT_ENTRIES_BY_PERSONS_NAME = 9;
 
     public static final int EDIT_FIRSTNAME = 1;
     public static final int EDIT_LASTNAME = 2;

@@ -23,6 +23,7 @@ public class Main {
                                 6.Search Persons By City Or State
                                 7.View Persons By City
                                 8.Count Persons By City Or State
+                                9.Sort Entries By Persons Name
                                 0.Exit""");
             System.out.print("Enter your choice : ");
             int userChoice = scnr.nextInt();
@@ -44,6 +45,8 @@ public class Main {
                         multipleAddressBook.viewPersonsByCity();
                 case AddressBookConstants.COUNT_PERSONS_BY_CITY_OR_STATE ->
                         multipleAddressBook.countPersonsByCityOrState();
+                case AddressBookConstants.SORT_ENTRIES_BY_PERSONS_NAME ->
+                        multipleAddressBook.sortEntriesByPersonsName();
                 case AddressBookConstants.EXIT ->
                     count += 1;
                 default ->

@@ -27,22 +27,24 @@ public class MultipleAddressBook {
         chooseAddressBookToAddContact();
     }
 
-    public void chooseAddressBookToAddContact() {
+    public String chooseAddressBook() {
         Set<String> keys = addressBookMap.keySet();
-        System.out.println("Map : " + keys);
         if(keys.size() > 0) {
             System.out.println("\nAvailable Address Books are : " + keys);
             System.out.print("Please choose to add contact : ");
-            String chosenAddressBook = scnr.next();
-            if (addressBookMap.containsKey(chosenAddressBook)) {
-                addContactInSelectedAddressBook(chosenAddressBook);
-                return;
-            }
-            System.out.println("\nPlease choose a valid one...");
-            chooseAddressBookToAddContact();
+            return scnr.next();
+        }
+        return "\nNo Address Book Available, please add a New One";
+    }
+
+    public void chooseAddressBookToAddContact() {
+        String chosenAddressBook = chooseAddressBook();
+        if (addressBookMap.containsKey(chosenAddressBook)) {
+            addContactInSelectedAddressBook(chosenAddressBook);
             return;
         }
-        System.out.println("\nNo Address Book Available, please add a New One");
+        System.out.println("\nPlease choose a valid one...");
+        chooseAddressBookToAddContact();
     }
 
     public void addContactInSelectedAddressBook(String chosenAddressBook) {
@@ -89,7 +91,9 @@ public class MultipleAddressBook {
             ContactDetails contactDetails = addressBook.checkIfContactExists(usrFirstName, usrLastName);
             if (contactDetails != null) {
                 addressBook.editContactDetails(contactDetails);
+                return;
             }
+            System.out.println("\nPerson does not exist, please enter valid one...");
         }
     }
 
@@ -176,6 +180,16 @@ public class MultipleAddressBook {
                     }).forEach(count -> countNumberList.add(count));
         });
         System.out.println("Count = " + countNumberList.size());
+    }
+
+    public void sortEntriesByPersonsName() {
+        String choosenAddressBook = chooseAddressBook();
+        List<ContactDetails> contactDetailsList = addressBookMap.get(choosenAddressBook).contactDetailsArrayList.stream().toList();
+        System.out.println("Contact Details : " + contactDetailsList);
+
+        contactDetailsList.stream()
+                .sorted((p1, p2)->p1.getFirstName().compareTo(p2.getFirstName().toLowerCase()))
+                .forEach(System.out::println);
     }
 
     @Override
