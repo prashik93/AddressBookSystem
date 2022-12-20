@@ -163,6 +163,21 @@ public class MultipleAddressBook {
         System.out.println("\n No Address Book Available");
     }
 
+    public void countPersonsByCityOrState() {
+        String cityOrState = getCityOrState();
+        System.out.print("\nEnter City or State Name : ");
+        String cityOrStateName = scnr.next().toLowerCase();
+        ArrayList<Object> countNumberList = new ArrayList<>();
+        addressBookMap.values().forEach(value ->{
+            value.contactDetailsArrayList.stream().filter(filteredValue -> {
+                        if (cityOrState.equals("city"))
+                            return filteredValue.getCity().equals(cityOrStateName);
+                        else return filteredValue.getState().equals(cityOrStateName);
+                    }).forEach(count -> countNumberList.add(count));
+        });
+        System.out.println("Count = " + countNumberList.size());
+    }
+
     @Override
     public String toString() {
         return "addressBookMap=" + addressBookMap;
