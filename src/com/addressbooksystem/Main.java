@@ -24,6 +24,9 @@ public class Main {
                                 7.View Persons By City
                                 8.Count Persons By City Or State
                                 9.Sort Entries By Persons Name
+                                10.Sort Entries By City Name
+                                11.Sort Entries By State Name
+                                12.Sort Entries By Zip Code
                                 0.Exit""");
             System.out.print("Enter your choice : ");
             int userChoice = scnr.nextInt();
@@ -47,6 +50,12 @@ public class Main {
                         multipleAddressBook.countPersonsByCityOrState();
                 case AddressBookConstants.SORT_ENTRIES_BY_PERSONS_NAME ->
                         multipleAddressBook.sortEntriesByPersonsName();
+                case AddressBookConstants.SORT_ENTRIES_BY_CITY ->
+                        multipleAddressBook.sortEntriesByCityName();
+                case AddressBookConstants.SORT_ENTRIES_BY_STATE ->
+                        multipleAddressBook.sortEntriesByStateName();
+                case AddressBookConstants.SORT_ENTRIES_BY_ZIP ->
+                        multipleAddressBook.sortEntriesByZipCode();
                 case AddressBookConstants.EXIT ->
                     count += 1;
                 default ->

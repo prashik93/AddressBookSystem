@@ -182,14 +182,39 @@ public class MultipleAddressBook {
         System.out.println("Count = " + countNumberList.size());
     }
 
-    public void sortEntriesByPersonsName() {
+    public List<ContactDetails> getContactDetailsList() {
         String choosenAddressBook = chooseAddressBook();
         List<ContactDetails> contactDetailsList = addressBookMap.get(choosenAddressBook).contactDetailsArrayList.stream().toList();
-        System.out.println("Contact Details : " + contactDetailsList);
+        return contactDetailsList;
+    }
 
+    public void sortEntriesByPersonsName() {
+        List<ContactDetails> contactDetailsList = getContactDetailsList();
         contactDetailsList.stream()
                 .sorted((p1, p2)->p1.getFirstName().compareTo(p2.getFirstName().toLowerCase()))
                 .forEach(System.out::println);
+    }
+
+    public void sortEntriesByCityName() {
+        List<ContactDetails> contactDetailsList = getContactDetailsList();
+        contactDetailsList.stream().sorted((c1, c2) -> c1.getCity().
+                compareTo(c2.getCity().toLowerCase())).
+                forEach(city -> System.out.println(city));
+
+    }
+
+    public void sortEntriesByStateName() {
+        List<ContactDetails> contactDetailsList = getContactDetailsList();
+        contactDetailsList.stream().sorted((s1, s2) -> s1.getState().
+                compareTo(s2.getState().toLowerCase())).
+                forEach(state -> System.out.println(state));
+    }
+
+    public void sortEntriesByZipCode() {
+        List<ContactDetails> contactDetailsList = getContactDetailsList();
+        contactDetailsList.stream().sorted((z1, z2) -> z1.getZip().
+                compareTo(z2.getZip().toLowerCase())).
+                forEach(zip -> System.out.println(zip));
     }
 
     @Override
