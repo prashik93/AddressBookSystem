@@ -1,7 +1,6 @@
 package com.addressbooksystem;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MultipleAddressBook {
     Scanner scnr = new Scanner(System.in);
@@ -137,17 +136,16 @@ public class MultipleAddressBook {
     public void viewPersonsByCity() {
         System.out.print("\nEnter City or State Name : ");
         String cityOrStateName = scnr.next().toLowerCase();
+
+        List<ContactDetails> contactDetailsByCity = new ArrayList<>();
         Set<String> keys = addressBookMap.keySet();
         if (keys.size() > 0) {
             for (String key : keys) {
                 AddressBook addressBook = addressBookMap.get(key);
-                Set<String> collect = addressBook.contactDetailsArrayList.stream().
-                        map(existing -> existing.getCity()).collect(Collectors.toSet());
-
-                collect.forEach(city -> {if(city.equals(cityOrStateName)) {
-                    viewPersonsByCityMap.put(city, addressBook.contactDetailsArrayList.stream().
-                            filter(existing -> existing.getCity().equals(cityOrStateName)).collect(Collectors.toList()));
-                }});
+                addressBook.contactDetailsArrayList.stream()
+                        .filter(value -> value.getCity().equals(cityOrStateName)).toList()
+                        .forEach(contact -> contactDetailsByCity.add(contact));
+                viewPersonsByCityMap.put(cityOrStateName, contactDetailsByCity);
             }
             printPersonsByCityMap();
             return;
