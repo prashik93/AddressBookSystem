@@ -243,10 +243,11 @@ public class MultipleAddressBook {
         try{
             File file = new File("E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.txt");
             br = new BufferedReader( new FileReader(file) );
-            for(Map.Entry<String, AddressBook> entry : addressBookMap.entrySet()){
-                System.out.println( entry.getKey() + " => " + entry.getValue() );
-            }
 
+            String line = null;
+            while((line = br.readLine()) != null) {
+                System.out.println(line);
+            }
         }catch(Exception e){
             e.printStackTrace();
         }finally{
