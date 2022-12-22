@@ -13,21 +13,21 @@ public class AddressBook {
         Scanner scnr = new Scanner(System.in);
 
         System.out.print("\nEnter First Name : ");
-        contactDetails.setFirstName(scnr.next().toLowerCase());
+        contactDetails.setFirstName(scnr.nextLine().toLowerCase());
         System.out.print("Enter Last Name : ");
-        contactDetails.setLastName(scnr.next().toLowerCase());
+        contactDetails.setLastName(scnr.nextLine().toLowerCase());
         System.out.print("Enter Address : ");
-        contactDetails.setAddress(scnr.next().toLowerCase());
+        contactDetails.setAddress(scnr.nextLine().toLowerCase());
         System.out.print("Enter City : ");
-        contactDetails.setCity(scnr.next().toLowerCase());
+        contactDetails.setCity(scnr.nextLine().toLowerCase());
         System.out.print("Enter State : ");
-        contactDetails.setState(scnr.next().toLowerCase());
+        contactDetails.setState(scnr.nextLine().toLowerCase());
         System.out.print("Enter Zip Code : ");
-        contactDetails.setZip(scnr.next());
+        contactDetails.setZip(scnr.nextLine());
         System.out.print("Enter Phone Number : ");
-        contactDetails.setPhone(scnr.next());
+        contactDetails.setPhone(scnr.nextLine());
         System.out.print("Enter Email : ");
-        contactDetails.setEmail(scnr.next());
+        contactDetails.setEmail(scnr.nextLine());
     }
 
     public void addContactDetails () {
@@ -78,35 +78,35 @@ public class AddressBook {
             switch (elementForEditing) {
                 case AddressBookConstants.EDIT_FIRSTNAME -> {
                     System.out.print("Enter New First Name : ");
-                    contactDetails.setFirstName(scnr.next().toLowerCase());
+                    contactDetails.setFirstName(scnr.nextLine().toLowerCase());
                 }
                 case AddressBookConstants.EDIT_LASTNAME -> {
                     System.out.print("Enter New Last Name : ");
-                    contactDetails.setLastName(scnr.next().toLowerCase());
+                    contactDetails.setLastName(scnr.nextLine().toLowerCase());
                 }
                 case AddressBookConstants.EDIT_ADDRESS -> {
                     System.out.print("Enter New Address : ");
-                    contactDetails.setAddress(scnr.next().toLowerCase());
+                    contactDetails.setAddress(scnr.nextLine().toLowerCase());
                 }
                 case AddressBookConstants.EDIT_CITY -> {
                     System.out.print("Enter New City Name : ");
-                    contactDetails.setCity(scnr.next().toLowerCase());
+                    contactDetails.setCity(scnr.nextLine().toLowerCase());
                 }
                 case AddressBookConstants.EDIT_STATE -> {
                     System.out.print("Enter New State Name : ");
-                    contactDetails.setState(scnr.next().toLowerCase());
+                    contactDetails.setState(scnr.nextLine().toLowerCase());
                 }
                 case AddressBookConstants.EDIT_ZIPCODE -> {
                     System.out.print("Enter New Zip Code : ");
-                    contactDetails.setZip(scnr.next());
+                    contactDetails.setZip(scnr.nextLine());
                 }
                 case AddressBookConstants.EDIT_PHONE -> {
                     System.out.print("Enter New Phone Number : ");
-                    contactDetails.setPhone(scnr.next());
+                    contactDetails.setPhone(scnr.nextLine());
                 }
                 case AddressBookConstants.EDIT_EMAIL -> {
                     System.out.print("Enter New Email-Id : ");
-                    contactDetails.setEmail(scnr.next().toLowerCase());
+                    contactDetails.setEmail(scnr.nextLine().toLowerCase());
                 }
                 case AddressBookConstants.EXIT -> {
                 }
@@ -130,10 +130,17 @@ public class AddressBook {
         return null;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return "AddressBook{" +
                 "contactDetailsArrayList=" + contactDetailsArrayList +
+                '}';
+    }*/
+
+    @Override
+    public String toString() {
+        return "{" +
+                  contactDetailsArrayList +
                 '}';
     }
 

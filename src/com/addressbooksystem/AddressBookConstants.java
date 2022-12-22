@@ -14,6 +14,8 @@ public class AddressBookConstants {
     public static final int SORT_ENTRIES_BY_CITY = 10;
     public static final int SORT_ENTRIES_BY_STATE = 11;
     public static final int SORT_ENTRIES_BY_ZIP = 12;
+    public static final int WRITE_IN_FILE_USING_IO = 13;
+    public static final int READ_FROM_FILE_USING_IO = 14;
 
     public static final int EDIT_FIRSTNAME = 1;
     public static final int EDIT_LASTNAME = 2;

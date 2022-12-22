@@ -1,13 +1,16 @@
 package com.addressbooksystem;
 
+import java.io.*;
 import java.util.*;
 
 public class MultipleAddressBook {
+    public enum IOService{FILE_IO}
+    private List<ContactDetails> addressBookContactList;
     Scanner scnr = new Scanner(System.in);
     public HashMap<String, AddressBook> addressBookMap = new HashMap<>();
     private HashMap<String, List<ContactDetails>> viewPersonsByCityMap = new HashMap<>();
 
-    public void addMultipleAddressBook() {
+    public Object addMultipleAddressBook() {
         System.out.print("\nHow many Address Book do you want to Create? : ");
         int addressBookCount = scnr.nextInt();
 
@@ -23,7 +26,7 @@ public class MultipleAddressBook {
             }
             addressBookMap.put(addressBookName, addressBook);
         }
-        chooseAddressBookToAddContact();
+        return chooseAddressBookToAddContact();
     }
 
     public String chooseAddressBook() {
@@ -36,14 +39,14 @@ public class MultipleAddressBook {
         return "\nNo Address Book Available, please add a New One";
     }
 
-    public void chooseAddressBookToAddContact() {
+    public Object chooseAddressBookToAddContact() {
         String chosenAddressBook = chooseAddressBook();
         if (addressBookMap.containsKey(chosenAddressBook)) {
             addContactInSelectedAddressBook(chosenAddressBook);
-            return;
+            return null;
         }
         System.out.println("\nPlease choose a valid one...");
-        chooseAddressBookToAddContact();
+        return chooseAddressBookToAddContact();
     }
 
     public void addContactInSelectedAddressBook(String chosenAddressBook) {
@@ -136,7 +139,6 @@ public class MultipleAddressBook {
     public void viewPersonsByCity() {
         System.out.print("\nEnter City or State Name : ");
         String cityOrStateName = scnr.next().toLowerCase();
-
         List<ContactDetails> contactDetailsByCity = new ArrayList<>();
         Set<String> keys = addressBookMap.keySet();
         if (keys.size() > 0) {
@@ -213,6 +215,47 @@ public class MultipleAddressBook {
         contactDetailsList.stream().sorted((z1, z2) -> z1.getZip().
                 compareTo(z2.getZip().toLowerCase())).
                 forEach(zip -> System.out.println(zip));
+    }
+
+    public void writeInAddressBookFile(){
+        final String outputFilePath = "E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.txt";
+        File file = new File(outputFilePath);
+        BufferedWriter bf = null;;
+        try{
+            bf = new BufferedWriter( new FileWriter(file) );
+            for(Map.Entry<String, AddressBook> entry : addressBookMap.entrySet()){
+                bf.write( entry.getKey() + ":" + entry.getValue() );
+                bf.newLine();
+            }
+            bf.flush();
+        }catch(IOException e){
+            e.printStackTrace();
+        } finally{
+            try{
+                bf.close();
+            }catch(Exception e){}
+        }
+    }
+
+    public void readFromAddressBookFile() {
+        BufferedReader br = null;
+
+        try{
+            File file = new File("E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.txt");
+            br = new BufferedReader( new FileReader(file) );
+            for(Map.Entry<String, AddressBook> entry : addressBookMap.entrySet()){
+                System.out.println( entry.getKey() + " => " + entry.getValue() );
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }finally{
+            if(br != null){
+                try {
+                    br.close();
+                }catch(Exception e){};
+            }
+        }
     }
 
     @Override

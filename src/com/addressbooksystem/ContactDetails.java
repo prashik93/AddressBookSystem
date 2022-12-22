@@ -1,6 +1,21 @@
 package com.addressbooksystem;
 
 public class ContactDetails {
+    public ContactDetails() {
+
+    }
+
+    public ContactDetails(String firstName, String lastName, String address, String city, String state, String zip, String phone, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.phone = phone;
+        this.email = email;
+    }
+
     private String firstName;
     private String lastName;
     private  String address;
@@ -75,7 +90,9 @@ public class ContactDetails {
 
     @Override
     public String toString() {
-        return firstName + " " + lastName + " " + address + " " + city + " "
-                + state + " " + zip + " " + phone + " " + email;
+        return "FirstName" + " = " + firstName + " " + "LastName" + " = " +lastName + " " +
+                "Address" + " = " + address + " " + "City" + " = " + city + " " +
+                "State" + " = " + state + " " + "Zip" + " = " + zip + " " + "Phone" + " = " + phone + " " +
+                "Email" + " = " + email;
     }
 }

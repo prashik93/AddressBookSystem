@@ -27,6 +27,8 @@ public class Main {
                                 10.Sort Entries By City Name
                                 11.Sort Entries By State Name
                                 12.Sort Entries By Zip Code
+                                13.Write In File Using File IO
+                                14.Read From File Using File IO
                                 0.Exit""");
             System.out.print("Enter your choice : ");
             int userChoice = scnr.nextInt();
@@ -56,6 +58,10 @@ public class Main {
                         multipleAddressBook.sortEntriesByStateName();
                 case AddressBookConstants.SORT_ENTRIES_BY_ZIP ->
                         multipleAddressBook.sortEntriesByZipCode();
+                case AddressBookConstants.WRITE_IN_FILE_USING_IO ->
+                        multipleAddressBook.writeInAddressBookFile();
+                case AddressBookConstants.READ_FROM_FILE_USING_IO ->
+                        multipleAddressBook.readFromAddressBookFile();
                 case AddressBookConstants.EXIT ->
                     count += 1;
                 default ->
