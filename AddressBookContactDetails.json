@@ -1,0 +1,16 @@
+{
+  "add1": {
+    "contactDetailsArrayList": [
+      {
+        "firstName": "a",
+        "lastName": "g",
+        "address": "a",
+        "city": "g",
+        "state": "a",
+        "zip": "g",
+        "phone": "a",
+        "email": "g"
+      }
+    ]
+  }
+}

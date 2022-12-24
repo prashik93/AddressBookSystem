@@ -1,16 +1,19 @@
 package com.addressbooksystem;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import java.io.*;
+import java.lang.reflect.Type;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MultipleAddressBook {
-    public enum IOService{FILE_IO}
-    private List<ContactDetails> addressBookContactList;
     Scanner scnr = new Scanner(System.in);
-    public HashMap<String, AddressBook> addressBookMap = new HashMap<>();
-    private HashMap<String, List<ContactDetails>> viewPersonsByCityMap = new HashMap<>();
+    private final Map<String, AddressBook> addressBookMap = new HashMap<>();
+    public Map<String, List<ContactDetails>> viewPersonsByCityMap = new HashMap<>();
 
-    public Object addMultipleAddressBook() {
+    public void addMultipleAddressBook() {
         System.out.print("\nHow many Address Book do you want to Create? : ");
         int addressBookCount = scnr.nextInt();
 
@@ -26,7 +29,7 @@ public class MultipleAddressBook {
             }
             addressBookMap.put(addressBookName, addressBook);
         }
-        return chooseAddressBookToAddContact();
+        chooseAddressBookToAddContact();
     }
 
     public String chooseAddressBook() {
@@ -39,14 +42,14 @@ public class MultipleAddressBook {
         return "\nNo Address Book Available, please add a New One";
     }
 
-    public Object chooseAddressBookToAddContact() {
+    public void chooseAddressBookToAddContact() {
         String chosenAddressBook = chooseAddressBook();
         if (addressBookMap.containsKey(chosenAddressBook)) {
             addContactInSelectedAddressBook(chosenAddressBook);
-            return null;
+            return;
         }
         System.out.println("\nPlease choose a valid one...");
-        return chooseAddressBookToAddContact();
+        chooseAddressBookToAddContact();
     }
 
     public void addContactInSelectedAddressBook(String chosenAddressBook) {
@@ -75,7 +78,7 @@ public class MultipleAddressBook {
         if(keys.size() > 0) {
             for (String key : keys) {
                 AddressBook addressBook = addressBookMap.get(key);
-                System.out.println(key + " = " + addressBook);
+                System.out.println(key + " : " + addressBook);
             }
             return;
         }
@@ -145,7 +148,7 @@ public class MultipleAddressBook {
             for (String key : keys) {
                 AddressBook addressBook = addressBookMap.get(key);
                 addressBook.contactDetailsArrayList.stream()
-                        .filter(value -> value.getCity().equals(cityOrStateName)).toList()
+                        .filter(value -> value.getCity().equals(cityOrStateName)).collect(Collectors.toList())
                         .forEach(contact -> contactDetailsByCity.add(contact));
                 viewPersonsByCityMap.put(cityOrStateName, contactDetailsByCity);
             }
@@ -184,8 +187,7 @@ public class MultipleAddressBook {
 
     public List<ContactDetails> getContactDetailsList() {
         String choosenAddressBook = chooseAddressBook();
-        List<ContactDetails> contactDetailsList = addressBookMap.get(choosenAddressBook).contactDetailsArrayList.stream().toList();
-        return contactDetailsList;
+        return addressBookMap.get(choosenAddressBook).contactDetailsArrayList.stream().collect(Collectors.toList());
     }
 
     public void sortEntriesByPersonsName() {
@@ -199,7 +201,7 @@ public class MultipleAddressBook {
         List<ContactDetails> contactDetailsList = getContactDetailsList();
         contactDetailsList.stream().sorted((c1, c2) -> c1.getCity().
                 compareTo(c2.getCity().toLowerCase())).
-                forEach(city -> System.out.println(city));
+                forEach(System.out::println);
 
     }
 
@@ -207,59 +209,87 @@ public class MultipleAddressBook {
         List<ContactDetails> contactDetailsList = getContactDetailsList();
         contactDetailsList.stream().sorted((s1, s2) -> s1.getState().
                 compareTo(s2.getState().toLowerCase())).
-                forEach(state -> System.out.println(state));
+                forEach(System.out::println);
     }
 
     public void sortEntriesByZipCode() {
         List<ContactDetails> contactDetailsList = getContactDetailsList();
         contactDetailsList.stream().sorted((z1, z2) -> z1.getZip().
                 compareTo(z2.getZip().toLowerCase())).
-                forEach(zip -> System.out.println(zip));
+                forEach(System.out::println);
     }
 
     public void writeInAddressBookFile(){
         final String outputFilePath = "E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.txt";
         File file = new File(outputFilePath);
-        BufferedWriter bf = null;;
-        try{
-            bf = new BufferedWriter( new FileWriter(file) );
-            for(Map.Entry<String, AddressBook> entry : addressBookMap.entrySet()){
-                bf.write( entry.getKey() + ":" + entry.getValue() );
+        try (BufferedWriter bf = new BufferedWriter(new FileWriter(file))) {
+            for (Map.Entry<String, AddressBook> entry : addressBookMap.entrySet()) {
+                bf.write(entry.getKey() + ":" + entry.getValue());
                 bf.newLine();
             }
+            System.out.println("Data Write Successfully...");
             bf.flush();
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        } finally{
-            try{
-                bf.close();
-            }catch(Exception e){}
         }
     }
 
     public void readFromAddressBookFile() {
         BufferedReader br = null;
-
         try{
             File file = new File("E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.txt");
             br = new BufferedReader( new FileReader(file) );
-            for(Map.Entry<String, AddressBook> entry : addressBookMap.entrySet()){
-                System.out.println( entry.getKey() + " => " + entry.getValue() );
+            String line = null;
+            while((line = br.readLine()) != null) {
+                System.out.println(line);
             }
-
+            System.out.println("Data Read Successfully...");
         }catch(Exception e){
             e.printStackTrace();
         }finally{
             if(br != null){
                 try {
                     br.close();
-                }catch(Exception e){};
+                }catch(Exception ignored){};
             }
+        }
+    }
+
+    public void writeInAddressBookUsingJsonFile() {
+        String outputFilePath = "E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.json";
+        try{
+            File file = new File(outputFilePath);
+            FileWriter writer = new FileWriter(file);
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            gson.toJson(addressBookMap, writer);
+            System.out.println("Data Added Successfully...");
+            writer.close();
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void readFromAddressBookUsingJsonFile() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.json"));
+            Gson gson = new GsonBuilder().setPrettyPrinting().create();
+            Map<String, AddressBook> map = gson.fromJson(br, new TypeToken<HashMap<String, AddressBook>>() {}.getType());
+            System.out.println("Map : " + map);
+            System.out.println("Data Read Successfully...");
+            br.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
     @Override
     public String toString() {
-        return "addressBookMap=" + addressBookMap;
+        return "MultipleAddressBook{" +
+                "scnr=" + scnr +
+                ", addressBookMap=" + addressBookMap +
+                ", viewPersonsByCityMap=" + viewPersonsByCityMap +
+                '}';
     }
 }

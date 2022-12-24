@@ -90,9 +90,9 @@ public class ContactDetails {
 
     @Override
     public String toString() {
-        return "FirstName" + " = " + firstName + " " + "LastName" + " = " +lastName + " " +
-                "Address" + " = " + address + " " + "City" + " = " + city + " " +
-                "State" + " = " + state + " " + "Zip" + " = " + zip + " " + "Phone" + " = " + phone + " " +
-                "Email" + " = " + email;
+        return "{" + "FirstName" + " : " + firstName + ", " + "LastName" + " : " +lastName + ", " +
+                "Address" + " : " + address + ", " + "City" + " : " + city + ", " +
+                "State" + " : " + state + ", " + "Zip" + " : " + zip + ", " + "Phone" + " : " + phone + ", " +
+                "Email" + " : " + email + "}";
     }
 }

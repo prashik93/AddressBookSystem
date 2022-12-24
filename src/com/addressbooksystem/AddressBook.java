@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class AddressBook {
     public ArrayList <ContactDetails> contactDetailsArrayList = new ArrayList<>();
-    MultipleAddressBook multipleAddressBook = new MultipleAddressBook();
+//    public MultipleAddressBook multipleAddressBook = new MultipleAddressBook();
 
     public void contactDetailsForm (ContactDetails contactDetails) {
         Scanner scnr = new Scanner(System.in);
@@ -41,8 +41,8 @@ public class AddressBook {
             String fname = contactDetails.getFirstName();
             String lname = contactDetails.getLastName();
             if(collect.size() == 0) {
-                boolean checkResult = multipleAddressBook.checkIfContactExists(fname, lname);
-                if(!checkResult) {
+                ContactDetails contactDetailsResult = checkIfContactExists(fname, lname);
+                if(contactDetailsResult == null) {
                     contactDetailsArrayList.add(contactDetails);}
             } else {
                 count--;
@@ -62,55 +62,55 @@ public class AddressBook {
         Scanner scnr = new Scanner(System.in);
         if(contactDetails != null) {
             System.out.println("\nWhat do you want to edit? : ");
-            System.out.println("""
-                        1.Edit First Name
-                        2.Edit Last Name
-                        3.Edit Address
-                        4.Edit City
-                        5.Edit State
-                        6.Edit Zip Code
-                        7.Edit Phone
-                        8.Edit Email
-                        9.Exit""");
+            System.out.println("\n1.Edit First Name\n2.Edit Last Name\n3.Edit Address\n4.Edit City\n5.Edit State\n6.Edit Zip Code\n7.Edit Phone\n8.Edit Email\n9.Exit");
             System.out.print("Enter your choice : ");
             int elementForEditing = scnr.nextInt();
 
             switch (elementForEditing) {
-                case AddressBookConstants.EDIT_FIRSTNAME -> {
+                case AddressBookConstants.EDIT_FIRSTNAME : {
                     System.out.print("Enter New First Name : ");
                     contactDetails.setFirstName(scnr.nextLine().toLowerCase());
+                    break;
                 }
-                case AddressBookConstants.EDIT_LASTNAME -> {
+                case AddressBookConstants.EDIT_LASTNAME : {
                     System.out.print("Enter New Last Name : ");
                     contactDetails.setLastName(scnr.nextLine().toLowerCase());
+                    break;
                 }
-                case AddressBookConstants.EDIT_ADDRESS -> {
+                case AddressBookConstants.EDIT_ADDRESS : {
                     System.out.print("Enter New Address : ");
                     contactDetails.setAddress(scnr.nextLine().toLowerCase());
+                    break;
                 }
-                case AddressBookConstants.EDIT_CITY -> {
+                case AddressBookConstants.EDIT_CITY : {
                     System.out.print("Enter New City Name : ");
                     contactDetails.setCity(scnr.nextLine().toLowerCase());
+                    break;
                 }
-                case AddressBookConstants.EDIT_STATE -> {
+                case AddressBookConstants.EDIT_STATE : {
                     System.out.print("Enter New State Name : ");
                     contactDetails.setState(scnr.nextLine().toLowerCase());
+                    break;
                 }
-                case AddressBookConstants.EDIT_ZIPCODE -> {
+                case AddressBookConstants.EDIT_ZIPCODE : {
                     System.out.print("Enter New Zip Code : ");
                     contactDetails.setZip(scnr.nextLine());
+                    break;
                 }
-                case AddressBookConstants.EDIT_PHONE -> {
+                case AddressBookConstants.EDIT_PHONE : {
                     System.out.print("Enter New Phone Number : ");
                     contactDetails.setPhone(scnr.nextLine());
+                    break;
                 }
-                case AddressBookConstants.EDIT_EMAIL -> {
+                case AddressBookConstants.EDIT_EMAIL : {
                     System.out.print("Enter New Email-Id : ");
                     contactDetails.setEmail(scnr.nextLine().toLowerCase());
+                    break;
                 }
-                case AddressBookConstants.EXIT -> {
+                case AddressBookConstants.EXIT : {
+                    break;
                 }
-                default -> System.out.println("\nPlease give valid input!");
+                default : System.out.println("\nPlease give valid input!");
             }
         }
         System.out.println("\nArrayList after editing : " + contactDetailsArrayList);
@@ -139,9 +139,6 @@ public class AddressBook {
 
     @Override
     public String toString() {
-        return "{" +
-                  contactDetailsArrayList +
-                '}';
+        return contactDetailsArrayList + " ";
     }
-
 }
