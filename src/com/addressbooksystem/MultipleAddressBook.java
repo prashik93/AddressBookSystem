@@ -3,8 +3,8 @@ package com.addressbooksystem;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.opencsv.*;
 import java.io.*;
-import java.lang.reflect.Type;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -252,6 +252,56 @@ public class MultipleAddressBook {
                     br.close();
                 }catch(Exception ignored){};
             }
+        }
+    }
+
+    public void writeInAddressBookUsingOpenCSV() {
+        final String outputFilePath = "E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.csv";
+        File file = new File(outputFilePath);
+        try {
+            FileWriter outputfile = new FileWriter(file);
+            CSVWriter writer = new CSVWriter(outputfile, ',',
+                    CSVWriter.NO_QUOTE_CHARACTER,
+                    CSVWriter.DEFAULT_ESCAPE_CHARACTER,
+                    CSVWriter.DEFAULT_LINE_END);
+
+            String[] header = { "AddressBook", "First Name", "Last Name", "Address", "City", "State", "Zip", "Phone Number", "Email" };
+            writer.writeNext(header);
+
+            for(String key :addressBookMap.keySet() ){
+                AddressBook addressBook = addressBookMap.get(key);
+                addressBook.contactDetailsArrayList.forEach(contact -> {
+                    String[] data = { key, contact.getFirstName(),contact.getLastName(),contact.getAddress(),contact.getCity(),contact.getState(),contact.getZip(),contact.getPhone(),contact.getEmail()};
+                    writer.writeNext(data);
+                });
+            }
+            writer.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readFromAddressBookUsingOpenCSV() {
+        final String outputFilePath = "E:\\Projects\\intellijProjects\\AddressBookSystem\\AddressBookContactDetails.csv";
+        File file = new File(outputFilePath);
+        try {
+            FileReader filereader = new FileReader(file);
+            CSVParser parser = new CSVParserBuilder().withSeparator(';').build();
+            CSVReader csvReader = new CSVReaderBuilder(filereader)
+                    .withCSVParser(parser)
+                    .build();
+
+            List<String[]> allData = csvReader.readAll();
+            for (String[] row : allData) {
+                for (String record : row) {
+                    System.out.print(record + "\t");
+                }
+                System.out.println();
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

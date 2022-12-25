@@ -16,6 +16,8 @@ public class AddressBookConstants {
     public static final int SORT_ENTRIES_BY_ZIP = 12;
     public static final int WRITE_IN_FILE_USING_IO = 13;
     public static final int READ_FROM_FILE_USING_IO = 14;
+    public static final int WRITE_IN_FILE_USING_OPENCSV = 15;
+    public static final int READ_FROM_FILE_USING_OPENCSV = 16;
     public static final int WRITE_IN_FILE_USING_JSON = 17;
     public static final int READ_FROM_FILE_USING_JSON = 18;
 

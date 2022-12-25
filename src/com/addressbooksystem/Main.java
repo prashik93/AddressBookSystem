@@ -17,7 +17,8 @@ public class Main {
             System.out.println("\n1.Add Address Book \n2.Add In Existing Address Book \n3.Print Address Book \n4.Edit Address Book's Contact Detail " +
                     "\n5.Delete Address Book's Contact Detail \n6.Search Persons By City Or State \n7.View Persons By City \n8.Count Persons By City Or State " +
                     "\n9.Sort Entries By Persons Name \n10.Sort Entries By City Name \n11.Sort Entries By State Name \n12.Sort Entries By Zip Code " +
-                    "\n13.Write In File Using File IO \n14.Read From File Using File IO \n17.Write In File Using Json File \n18.Read From File Using Json File \n0.Exit");
+                    "\n13.Write In File Using File IO \n14.Read From File Using File IO \n15.Write In File Using OpenCSV \n16.Read From File Using OpenCSV" +
+                    "\n17.Write In File Using Json File \n18.Read From File Using Json File \n0.Exit");
             System.out.print("Enter your choice : ");
             int userChoice = scnr.nextInt();
 
@@ -63,6 +64,12 @@ public class Main {
                     break;
                 case AddressBookConstants.READ_FROM_FILE_USING_IO :
                     multipleAddressBook.readFromAddressBookFile();
+                    break;
+                case AddressBookConstants.WRITE_IN_FILE_USING_OPENCSV :
+                    multipleAddressBook.writeInAddressBookUsingOpenCSV();
+                    break;
+                case AddressBookConstants.READ_FROM_FILE_USING_OPENCSV :
+                    multipleAddressBook.readFromAddressBookUsingOpenCSV();
                     break;
                 case AddressBookConstants.WRITE_IN_FILE_USING_JSON :
                     multipleAddressBook.writeInAddressBookUsingJsonFile();

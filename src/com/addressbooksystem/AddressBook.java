@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 public class AddressBook {
     public ArrayList <ContactDetails> contactDetailsArrayList = new ArrayList<>();
-//    public MultipleAddressBook multipleAddressBook = new MultipleAddressBook();
 
     public void contactDetailsForm (ContactDetails contactDetails) {
         Scanner scnr = new Scanner(System.in);
@@ -129,13 +128,6 @@ public class AddressBook {
         }
         return null;
     }
-
-    /*@Override
-    public String toString() {
-        return "AddressBook{" +
-                "contactDetailsArrayList=" + contactDetailsArrayList +
-                '}';
-    }*/
 
     @Override
     public String toString() {
